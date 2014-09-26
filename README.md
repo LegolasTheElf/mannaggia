@@ -2,9 +2,17 @@ mannaggia.sh
 =========
 
 automatic saint calling for depressed Veteran unix Admins, in italian
+
 Developed in italian, can be easily adapted in other languages.
 
+requres mplayer to use the --audio parameters
+
+
+
 Questo script provvede a nominare tutti i santi per voi quando vi sentite depressi.
+
+Prerequisiti:
+* mplayer per potere usare il parametro --audio
 
 parametri da command line:
 * --audio : attiva mplayer per fargli pronunciare i santi
