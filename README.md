@@ -14,8 +14,12 @@ parametri da command line:
 Rilasciato sotto Licenza GNU-GPL v.3
 
 idea originale by Alexiobash dallo script incazzatore.sh
+
 ampliata, riscritta e mantenuta da Pietro "Legolas" Suffritti
+
 convertita in mannaggia.sh rel 0.2
+
 patcher e contributors:
 Marco Placidi, Maurizio "Tannoiser" Lemmo
+
 thanks to : Veteran Unix Admins group on Facebook
