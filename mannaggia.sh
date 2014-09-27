@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 ############################################################
 # Mannaggiatore automatico per VUA depressi
 # idea originale by Alexiobash dallo script incazzatore.sh
@@ -22,53 +22,54 @@ DELSTRING1="</FONT>"
 DELSTRING2="</b>"
 
 # lettura parametri da riga comando
-for parm in $* 
+for parm in "$@"
 	do
 	# leggi dai parametri se c'e' l'audio
-	if [ $parm == "--audio" ] 
+	if [ "$parm" = "--audio" ]
 		then 
 		audioflag=true
 	fi
 
 	# leggi dai parametri se c'e' da mandare i commenti su wall
-	if [ $parm == "--wall" ] 
+	if [ "$parm" = "--wall" ]
 		then 
 		wallflag=true
 	fi
 
 	# se flag
 	# imposta i santi per minuto e resetta il flag
-	if [ $spmflag == true ]
+	if [ "$spmflag" = true ]
 		then
-		let "spm = 60 / $parm"
+		spm=$((60 / parm))
 		spmflag=false
 	fi
 
 	# se parm = --spm
 	# setta un flag
-	if [ $parm == "--spm" ]
+	if [ "$parm" = "--spm" ]
 		then
 		spmflag=true
 	fi
 done
 
-while [ 1 ] 
+while true
 	do
-	MANNAGGIA="Mannaggia `curl -s www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/|grep tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}'`"
+	# shellcheck disable=SC2019
+	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
 	MANNAGGIAURL="http://translate.google.com/translate_tts?tl=it&q=$MANNAGGIA"
 	
-	if [ $wallflag == true ]
+	if [ "$wallflag" = true ]
 		then
 			# attenzione: se non siete root o sudoers dovete togliere dalla riga successiva "sudo" e "-n"
-			echo $MANNAGGIA | sudo wall -n
+			echo "$MANNAGGIA" | sudo wall -n
 		else
-			echo $MANNAGGIA 
+			echo "$MANNAGGIA"
 	fi
 
-	if [ $audioflag == true ]
+	if [ "$audioflag" = true ]
 		then
 		mplayer -really-quiet -ao alsa "$MANNAGGIAURL" 2>/dev/null
 	fi
 
-	sleep $spm
+	sleep "$spm"
 done
