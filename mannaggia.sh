@@ -6,6 +6,7 @@
 # convertita in mannaggia.sh rel 0.2
 # patcher e contributors:
 # Marco Placidi, Maurizio "Tannoiser" Lemmo, Matteo Panella
+# Mattia Munari
 # thanks to : Veteran Unix Admins group on Facebook
 # released under GNU-GPLv3
 ############################################################
