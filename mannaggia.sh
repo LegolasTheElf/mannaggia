@@ -25,6 +25,7 @@ ndsflag=false
 wallflag=false
 DELSTRING1="</FONT>"
 DELSTRING2="</b>"
+PLAYER="mplayer -really-quiet -ao alsa"
 
 # lettura parametri da riga comando
 for parm in "$@"
@@ -100,7 +101,7 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
-		mplayer -really-quiet -ao alsa "$MANNAGGIAURL" 2>/dev/null
+		$PLAYER "$MANNAGGIAURL" 2>/dev/null
 	fi
 
 	sleep "$spm"
