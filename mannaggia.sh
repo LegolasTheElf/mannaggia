@@ -15,7 +15,7 @@
 # --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
 
 audioflag=false
-spm=60
+spm=1
 spmflag=false
 wallflag=false
 DELSTRING1="</FONT>"
@@ -40,8 +40,14 @@ for parm in "$@"
 	# imposta i santi per minuto e resetta il flag
 	if [ "$spmflag" = true ]
 		then
-		spm=$((60 / parm))
-		spmflag=false
+		if [ $parm -lt 1 ]
+			then
+			spm=1
+			spmflag=false
+			else
+			spm=$((60 / parm))
+			spmflag=false
+		fi
 	fi
 
 	# se parm = --spm
@@ -63,7 +69,7 @@ while true
 			# attenzione: se non siete root o sudoers dovete togliere dalla riga successiva "sudo" e "-n"
 			echo "$MANNAGGIA" | sudo wall -n
 		else
-			echo "$MANNAGGIA"
+			echo "$MANNAGGIA" > /dev/stdout
 	fi
 
 	if [ "$audioflag" = true ]
