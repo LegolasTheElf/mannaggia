@@ -31,5 +31,6 @@ patcher e contributors:
 * Marco Placidi
 * Maurizio "Tannoiser" Lemmo
 * Matteo Panella
+* Mattia Munari
 
 thanks to : Veteran Unix Admins group on Facebook
