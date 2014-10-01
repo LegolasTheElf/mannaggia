@@ -20,6 +20,7 @@ audioflag=false
 spm=1
 spmflag=false
 nds=-1
+pot=-1
 ndsflag=false
 wallflag=false
 DELSTRING1="</FONT>"
@@ -85,10 +86,16 @@ while [ "$nds" != 0 ]
 	
 	if [ "$wallflag" = true ]
 		then
+		pot=$(( nds % 50 ))
+		if [ "$pot" = 0 ]
+			then
+			echo "systemd merda, poettering vanaglorioso fonte di danni, ti strafulmini santa cunegonda bipalluta protrettice dei VUA"
+			else
 			# attenzione: se non siete root o sudoers dovete togliere dalla riga successiva "sudo" e "-n"
 			echo "$MANNAGGIA" | sudo wall -n
+		fi
 		else
-			echo "$MANNAGGIA" > /dev/stdout
+		echo "$MANNAGGIA" > /dev/stdout
 	fi
 
 	if [ "$audioflag" = true ]
