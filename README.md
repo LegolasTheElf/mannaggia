@@ -1,11 +1,11 @@
 mannaggia.sh
 =========
 
-automatic saint calling for depressed Veteran unix Admins, in italian
+Automatic saint invocation for depressed Veteran Unix Admins,
 
-Developed in italian, can be easily adapted in other languages.
+it's developed in italian, it can be easily adapted in other languages.
 
-requres mplayer to use the --audio parameters
+requires mplayer to use the --audio parameters
 
 
 
