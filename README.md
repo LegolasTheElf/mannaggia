@@ -18,6 +18,7 @@ parametri da command line:
 * --audio : attiva mplayer per fargli pronunciare i santi
 * --spm <n> : numero di santi per minuto
 * --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
+* --nds <n> : numero di santi da invocare (di default continua all'infinito)
 
 Rilasciato sotto Licenza GNU-GPL v.3
 
