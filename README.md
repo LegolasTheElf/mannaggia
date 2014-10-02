@@ -14,10 +14,14 @@ Questo script provvede a nominare tutti i santi per voi quando vi sentite depres
 Prerequisiti:
 * mplayer per potere usare il parametro --audio
 
-parametri da command line:
-* --audio : attiva mplayer per fargli pronunciare i santi
-* --spm <n> : numero di santi per minuto
-* --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
+Parametri da riga di comando:
+* --audio   	attiva mplayer per pronunciare i santi;
+* --wall    	invia l'output in broadcast a tutte le console (usando wall) (Attenzione: Se si è impossibilitati dall'usare i permessi di root, rimuovere il "-n" dal codice sorgente dello script)
+* --spm <n> 	numero di santi-per-minuto;
+* --nds <n>	numero-di-santi (infiniti di default);
+* --oneshot 	per evocare soltanto un santo (sovrascrivendo eventuali --nds);
+* --help    	mostra una pagina di aiuto.
+
 
 Rilasciato sotto Licenza GNU-GPL v.3
 
@@ -27,10 +31,11 @@ ampliata, riscritta e mantenuta da Pietro "Legolas" Suffritti
 
 convertita in mannaggia.sh rel 0.2
 
-patcher e contributors:
+Patcher e contributors:
 * Marco Placidi
 * Maurizio "Tannoiser" Lemmo
 * Matteo Panella
 * Mattia Munari
+* Valerio Bozzolan
 
-thanks to : Veteran Unix Admins group on Facebook
+Thanks to: Veteran Unix Admins group on Facebook
