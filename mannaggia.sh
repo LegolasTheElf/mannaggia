@@ -82,7 +82,7 @@ done
 while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
+	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
 	MANNAGGIAURL="http://translate.google.com/translate_tts?tl=it&q=$MANNAGGIA"
 	
 	if [ "$wallflag" = true ]
