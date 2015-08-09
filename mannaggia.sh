@@ -22,6 +22,7 @@
 # --shutdown : se nds > 0 e si e` root al termine delle invocazioni spegne
 # --off  : se si e` root invoca un solo santo e spegne (equivale a --nds 1 --shutdown)
 audioflag=false
+audiogoogle=true
 spm=1
 spmflag=false
 nds=-1
@@ -43,6 +44,23 @@ if [ $(uname) = "Darwin" ]
 	shufCmd=shuf
 fi
 
+espeak_best_voice() {
+	v=$(espeak --voices=it | tail -n +2 | awk '{ print $4 }' | grep -v mbrola | head -n1)
+	if [ -n "$v" ]; then
+        # shellcheck disable=SC2039
+		echo "-v $v -k10 -g1 -p 30"
+		return
+	fi
+	v=$(espeak --voices=it | tail -n +2 | awk '{ print $4 }' | head -n1)
+	if [ -n "$v" ]; then
+        # shellcheck disable=SC2039
+		echo "-v $v"
+		return
+	fi
+	echo " "
+}
+ESPEAK="espeak $(espeak_best_voice)"
+
 # lettura parametri da riga comando
 for parm in "$@"
 	do
@@ -55,6 +73,12 @@ for parm in "$@"
 			exit 255
 		}
 		audioflag=true
+	fi
+	if [ "$parm" = "--google" ] then 
+		audiogoogle=true
+	fi
+	if [ "$parm" = "--espeak" ] then 
+		audiogoogle=false
 	fi
 
 	# leggi dai parametri se c'e' da mandare i commenti su wall
@@ -141,7 +165,12 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
-		$PLAYER "$MANNAGGIAURL" 2>/dev/null
+			if [ "$audiogoogle" = true ]
+			then
+				$PLAYER "$MANNAGGIAURL" 2>/dev/null
+			else
+				$ESPEAK "$MANNAGGIA" 2> /dev/null
+			fi
 	fi
 
 	sleep "$spm"
