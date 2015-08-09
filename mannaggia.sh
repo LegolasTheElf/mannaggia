@@ -43,6 +43,19 @@ espeak_best_voice() {
 }
 ESPEAK="espeak $(espeak_best_voice)"
 
+vocalizza() {
+	if [ "$audioflag" = true ]
+	then
+		if [ "$audiogoogle" = true ]
+		then
+			MANNAGGIAURL="http://translate.google.com/translate_tts?tl=it&q=$1"
+			$PLAYER "$MANNAGGIAURL" 2>/dev/null
+		else
+			$ESPEAK "$1" 2> /dev/null
+		fi
+	fi
+}
+
 # lettura parametri da riga comando
 for parm in "$@"
 	do
@@ -51,10 +64,10 @@ for parm in "$@"
 		then 
 		audioflag=true
 	fi
-	if [ "$parm" = "--google" ] then 
+	if [ "$parm" = "--google" ]; then 
 		audiogoogle=true
 	fi
-	if [ "$parm" = "--espeak" ] then 
+	if [ "$parm" = "--espeak" ]; then 
 		audiogoogle=false
 	fi
 
@@ -105,7 +118,6 @@ while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
-	MANNAGGIAURL="http://translate.google.com/translate_tts?tl=it&q=$MANNAGGIA"
 	
 	if [ "$wallflag" = true ]
 		then
@@ -121,16 +133,7 @@ while [ "$nds" != 0 ]
 		echo "$MANNAGGIA" > /dev/stdout
 	fi
 
-	if [ "$audioflag" = true ]
-		then
-			if [ "$audiogoogle" = true ]
-			then
-				$PLAYER "$MANNAGGIAURL" 2>/dev/null
-			else
-				$ESPEAK "$MANNAGGIA" 2> /dev/null
-			fi
-	fi
-
+	vocalizza "$MANNAGGIA"
 	sleep "$spm"
 	nds=$((nds - 1))
 done
