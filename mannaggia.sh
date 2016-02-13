@@ -99,7 +99,11 @@ while [ "$nds" != 0 ]
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
 	MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
 
-	if [ "$wallflag" = true ]
+	if [ "$help" = 1 ]; then
+                printf "Uso: mannaggiatore [opzioni]\nQuesto script provvede a nominare tutti i santi per voi quando vi sentite depressi.\n\nOpizoni:\n --audio: attiva mplayer per fargli pronunciare i santi\n --spm: numero di santi per minuto\n --wall: invia l'output a tute le console: attenzione, se non siete root o sudoers disattivare il flag -n\n --notify: invia una notifica desktop\n --help: mostra questa pagina\n\n Buona managgiata a tutti e ricordate: %s systemd merda 0/\n" "$MANNAGGIA";
+		exit 0
+	
+	elif [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
 		if [ "$pot" = 0 ]
@@ -117,10 +121,6 @@ while [ "$nds" != 0 ]
 		else
         		notify-send  "$MANNAGGIA" 2>/dev/null
 		fi
-	elif [ "$help" = 1 ]; then
-		echo "Uso: ./mannaggiatore.sh [opzioni]\nQuesto script provvede a nominare tutti i santi per voi quando vi sentite depressi.\n\nOpizoni:\n --audio: attiva mplayer per fargli pronunciare i santi
- --spm: numero di santi per minuto\n --wall: invia l'output a tute le console: atenzione, se non siete root o sudoers disattivare il flag -n\n --notify: invia una notifica desktop\n --help: mostra questa pagina\n\n Buona managgiata a tutti e ricordate: $MANNAGGIA systemd merda 0/"
-		exit 0
 
 	else
 		echo "$MANNAGGIA" > /dev/stdout
