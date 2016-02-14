@@ -97,7 +97,6 @@ while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}')"
-	MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
 
 	if [ "$help" = 1 ]; then
                 printf "Uso: mannaggiatore [opzioni]\nQuesto script provvede a nominare tutti i santi per voi quando vi sentite depressi.\n\nOpizoni:\n --audio: attiva mplayer per fargli pronunciare i santi\n --spm: numero di santi per minuto\n --wall: invia l'output a tute le console: attenzione, se non siete root o sudoers disattivare il flag -n\n --notify: invia una notifica desktop\n --help: mostra questa pagina\n\n Buona managgiata a tutti e ricordate: %s systemd merda 0/\n" "$MANNAGGIA";
@@ -128,6 +127,7 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
+		MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
 		$PLAYER "$MANNAGGIAURL" 2>/dev/null
 	fi
 
