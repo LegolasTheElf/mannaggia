@@ -30,7 +30,7 @@ convertita in mannaggia.sh rel 0.2
 Collaborators:
 * Enrico "Henryx" Bianchi
 * Alessandro "Aleskandro" Di Stefano 
-* Davide "kk0nrad" Corradi
+* Davide "kk0nrad" Corrado
 
 patcher e contributors:
 * Marco Placidi
