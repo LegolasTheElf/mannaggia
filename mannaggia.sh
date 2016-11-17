@@ -4,6 +4,9 @@
 # idea originale by Alexiobash dallo script incazzatore.sh
 # ampliata, riscritta e mantenuta da Pietro "Legolas" Suffritti
 # convertita in mannaggia.sh rel 0.2
+# Collaborators:
+# Enrico "Henryx" Bianchi, Alessandro "Aleskandro" Di Stefano,
+# Davide "kk0nrad" Corrado
 # patcher e contributors:
 # Marco Placidi, Maurizio "Tannoiser" Lemmo, Matteo Panella
 # Mattia Munari
