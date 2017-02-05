@@ -30,6 +30,14 @@ DELSTRING1="</FONT>"
 DELSTRING2="</b>"
 DEFPLAYER="mplayer -really-quiet -ao alsa"
 PLAYER="${PLAYER:-$DEFPLAYER}"
+LC_CTYPE=C
+
+if [ $(uname) = "Darwin" ]
+	then
+	shufCmd=gshuf
+	else
+	shufCmd=shuf
+fi
 
 # lettura parametri da riga comando
 for parm in "$@"
@@ -47,7 +55,7 @@ for parm in "$@"
 
 	# leggi dai parametri se c'e' da mandare i commenti su wall
 	if [ "$parm" = "--wall" ]
-		then 
+		then
 		wallflag=true
 	fi
 
@@ -91,9 +99,9 @@ done
 while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|shuf -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
+	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|$shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
 	MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
-	
+
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))

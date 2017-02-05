@@ -29,7 +29,7 @@ convertita in mannaggia.sh rel 0.2
 
 Collaborators:
 * Enrico "Henryx" Bianchi
-* Alessandro "Aleskandro" Di Stefano 
+* Alessandro "Aleskandro" Di Stefano
 * Davide "kk0nrad" Corrado
 
 patcher e contributors:
@@ -37,5 +37,6 @@ patcher e contributors:
 * Maurizio "Tannoiser" Lemmo
 * Matteo Panella
 * Mattia Munari
+* Paolo Fabbri
 
 thanks to : Veteran Unix Admins group on Facebook
