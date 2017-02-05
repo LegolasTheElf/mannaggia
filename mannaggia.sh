@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ############################################################
 # Mannaggiatore automatico per VUA depressi
 # idea originale by Alexiobash dallo script incazzatore.sh
@@ -20,6 +20,7 @@
 # --nds <n> : numero di santi da invocare (di default continua all'infinito)
 
 audioflag=false
+audiogoogle=true
 spm=1
 spmflag=false
 nds=-1
@@ -39,6 +40,33 @@ if [ $(uname) = "Darwin" ]
 	shufCmd=shuf
 fi
 
+espeak_best_voice() {
+	v=$(espeak --voices=it | tail -n +2 | awk '{ print $4 }' | grep -v mbrola | head -n1)
+	if [[ -n "$v" ]]; then
+		echo "-v $v -k10 -g1 -p 30 --stdout "
+		return
+	fi
+	v=$(espeak --voices=it | tail -n +2 | awk '{ print $4 }' | head -n1)
+	if [[ -n "$v" ]]; then
+		echo "-v $v --stdout "
+		return
+	fi
+	echo " --stdout "
+}
+
+vocalizza() {
+	if [ "$audioflag" = true ]
+	then
+		if [ "$audiogoogle" = true ]
+		then
+			MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$1%2C&voice=euritalianmale&speed=0&action=convert"
+			$PLAYER "$MANNAGGIAURL" 2>/dev/null
+		else
+			espeak $(espeak_best_voice) "$1"  | aplay > /dev/null 2>&1
+		fi
+	fi
+}
+
 # lettura parametri da riga comando
 for parm in "$@"
 	do
@@ -51,6 +79,12 @@ for parm in "$@"
 			exit 255
 		}
 		audioflag=true
+	fi
+	if [ "$parm" = "--google" ]; then 
+		audiogoogle=true
+	fi
+	if [ "$parm" = "--espeak" ]; then 
+		audiogoogle=false
 	fi
 
 	# leggi dai parametri se c'e' da mandare i commenti su wall
@@ -100,7 +134,6 @@ while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|$shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
-	MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
 
 	if [ "$wallflag" = true ]
 		then
@@ -116,11 +149,7 @@ while [ "$nds" != 0 ]
 		echo "$MANNAGGIA" > /dev/stdout
 	fi
 
-	if [ "$audioflag" = true ]
-		then
-		$PLAYER "$MANNAGGIAURL" 2>/dev/null
-	fi
-
+	vocalizza "$MANNAGGIA"
 	sleep "$spm"
 	nds=$((nds - 1))
 done
