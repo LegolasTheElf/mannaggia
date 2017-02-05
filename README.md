@@ -18,6 +18,8 @@ parametri da command line:
 * --audio : attiva mplayer per fargli pronunciare i santi
 * --spm <n> : numero di santi per minuto
 * --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
+* --shutdown : se si e' root spegne il computer dopo aver finito di invocare sant (dipende da --nds)
+* --off : equivalente a --nds 1 --shutdown
 
 Rilasciato sotto Licenza GNU-GPL v.3
 
