@@ -18,7 +18,9 @@
 # --spm <n> : numero di santi per minuto
 # --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
 # --nds <n> : numero di santi da invocare (di default continua all'infinito)
-
+# --nds <n> : numero di santi da invocare (di default continua all'infinito)
+# --shutdown : se nds > 0 e si e` root al termine delle invocazioni spegne
+# --off  : se si e` root invoca un solo santo e spegne (equivale a --nds 1 --shutdown)
 audioflag=false
 spm=1
 spmflag=false
@@ -26,6 +28,8 @@ nds=-1
 pot=-1
 ndsflag=false
 wallflag=false
+shutdown=false
+off=false
 DELSTRING1="</FONT>"
 DELSTRING2="</b>"
 DEFPLAYER="mplayer -really-quiet -ao alsa"
@@ -94,7 +98,26 @@ for parm in "$@"
 		then
 		ndsflag=true
 	fi
+
+	# dipende da --nds
+	if [ "$parm" = "--shutdown" ]
+			then
+			shutdown=true
+	fi
+
+	# imposta off su true, successivamente nds viene sovrascritto a 1
+	if [ "$parm" = "--off" ]
+			then 
+			off=true
+	fi
+
 done
+
+if [ $off = true ]
+		then
+		shutdown=true
+		nds=1
+fi
 
 while [ "$nds" != 0 ]
 	do
@@ -124,3 +147,8 @@ while [ "$nds" != 0 ]
 	sleep "$spm"
 	nds=$((nds - 1))
 done
+
+if [ $shutdown = true -a $UID = 0 ]
+		then
+		halt
+fi
