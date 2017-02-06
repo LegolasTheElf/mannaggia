@@ -21,8 +21,7 @@
 # --nds <n> : numero di santi da invocare (di default continua all'infinito)
 # --shutdown : se nds > 0 e si e` root al termine delle invocazioni spegne
 # --off  : se si e` root invoca un solo santo e spegne (equivale a --nds 1 --shutdown)
-audioflag=false
-audiogoogle=true
+audiosrc=espeak
 spm=1
 spmflag=false
 nds=-1
@@ -64,13 +63,22 @@ ESPEAK="espeak $(espeak_best_voice)"
 vocalizza() {
 	if [ "$audioflag" = true ]
 	then
-		if [ "$audiogoogle" = true ]
+		if [ "$audiosrc" = espeak ]
 		then
-			MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$1%2C&voice=euritalianmale&speed=0&action=convert"
+            tmpwav=$(mktemp mannaggia-XXXXXXXX.wav)
+            trap 'rm -f "$tmpwav"' EXIT
+			$ESPEAK "$1" --stdout > "$tmpwav" 2> /dev/null
+            $PLAYER "$tmpwav"
+            rm -f "$tmpwav"
+		else
+            if [ "$audiosrc" = ispeech ]
+            then
+                MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$1%2C&voice=euritalianmale&speed=0&action=convert"
+            else
+                MANNAGGIAURL="http://translate.google.com/translate_tts?tl=it&q=$1"
+            fi
 			
 			$PLAYER "$MANNAGGIAURL" 2>/dev/null
-		else
-			$ESPEAK "$1" 2> /dev/null
 		fi
 	fi
 }
@@ -89,10 +97,13 @@ for parm in "$@"
 		audioflag=true
 	fi
 	if [ "$parm" = "--google" ]; then
-		audiogoogle=true
+		audiosrc=google
 	fi
 	if [ "$parm" = "--espeak" ]; then
-		audiogoogle=false
+		audiosrc=espeak
+	fi
+	if [ "$parm" = "--ispeech" ]; then
+		audiosrc=ispeech
 	fi
 
 	# leggi dai parametri se c'e' da mandare i commenti su wall
