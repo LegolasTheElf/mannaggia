@@ -88,10 +88,10 @@ for parm in "$@"
 		}
 		audioflag=true
 	fi
-	if [ "$parm" = "--google" ]; then 
+	if [ "$parm" = "--google" ]; then
 		audiogoogle=true
 	fi
-	if [ "$parm" = "--espeak" ]; then 
+	if [ "$parm" = "--espeak" ]; then
 		audiogoogle=false
 	fi
 
