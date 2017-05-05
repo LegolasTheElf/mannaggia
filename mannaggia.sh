@@ -32,7 +32,7 @@ shutdown=false
 off=false
 DELSTRING1="</FONT>"
 DELSTRING2="</b>"
-DEFPLAYER="mplayer -really-quiet -ao alsa"
+DEFPLAYER="mplayer -cache 1024 -"
 PLAYER="${PLAYER:-$DEFPLAYER}"
 LC_CTYPE=C
 
@@ -141,7 +141,7 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
-		$PLAYER "$MANNAGGIAURL" 2>/dev/null
+		wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
 	fi
 
 	sleep "$spm"
