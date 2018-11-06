@@ -39,6 +39,7 @@ LC_CTYPE=C
 if [ $(uname) = "Darwin" ]
 	then
 	shufCmd=gshuf
+	PLAYER="say" # Qualcosa per non utilizzare il primo santo inutilmente.
 	else
 	shufCmd=shuf
 fi
@@ -141,7 +142,11 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
-		wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
+		if [ $(uname) = "Darwin" ]; then
+		    say -v Luca "$MANNAGGIA"
+		else
+		    wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
+		fi
 	fi
 
 	sleep "$spm"
