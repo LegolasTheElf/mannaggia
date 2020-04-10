@@ -14,7 +14,7 @@
 # released under GNU-GPLv3
 ############################################################
 # parametri da command line:
-# --audio : attiva mplayer per fargli pronunciare i santi
+# --audio : attiva mplayer per fargli pronunciare i santi ("say" su OSX)
 # --spm <n> : numero di santi per minuto
 # --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
 # --nds <n> : numero di santi da invocare (di default continua all'infinito)
@@ -32,16 +32,18 @@ shutdown=false
 off=false
 DELSTRING1="</FONT>"
 DELSTRING2="</b>"
-DEFPLAYER="mplayer -cache 1024 -"
-PLAYER="${PLAYER:-$DEFPLAYER}"
-LC_CTYPE=C
 
 if [ $(uname) = "Darwin" ]
 	then
 	shufCmd=gshuf
+	DEFPLAYER="say -v Luca"
 	else
 	shufCmd=shuf
+	DEFPLAYER="mplayer -cache 1024 -"
 fi
+
+PLAYER="${PLAYER:-$DEFPLAYER}"
+LC_CTYPE=C
 
 # lettura parametri da riga comando
 for parm in "$@"
@@ -141,7 +143,12 @@ while [ "$nds" != 0 ]
 
 	if [ "$audioflag" = true ]
 		then
-		wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
+		if [ $(uname) = "Darwin" ]
+			then
+			$PLAYER "$MANNAGGIA"
+			else
+			wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
+		fi
 	fi
 
 	sleep "$spm"
