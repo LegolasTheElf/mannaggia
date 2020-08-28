@@ -36,6 +36,11 @@ DEFPLAYER="mplayer -cache 1024 -"
 PLAYER="${PLAYER:-$DEFPLAYER}"
 LC_CTYPE=C
 
+say() {
+	local IFS=+
+	mplayer -ao alsa -really-quiet -noconsolecontrols "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=it"
+}
+
 if [ $(uname) = "Darwin" ]
 	then
 	shufCmd=gshuf
@@ -118,13 +123,10 @@ if [ $off = true ]
 		shutdown=true
 		nds=1
 fi
-
 while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9| sed '/^.$/d' | $shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
-	MANNAGGIAURL="http://www.ispeech.org/p/generic/getaudio?text=$MANNAGGIA%2C&voice=euritalianmale&speed=0&action=convert"
-
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
@@ -138,10 +140,9 @@ while [ "$nds" != 0 ]
 		else
 		echo "$MANNAGGIA" > /dev/stdout
 	fi
-
 	if [ "$audioflag" = true ]
 		then
-		wget "$MANNAGGIAURL" -O - 2> /dev/null | $PLAYER >> /dev/null 2>&1
+		say $MANNAGGIA 2>/dev/null
 	fi
 
 	sleep "$spm"
