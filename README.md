@@ -40,5 +40,6 @@ patcher e contributors:
 * Matteo Panella
 * Mattia Munari
 * Paolo Fabbri
+* Paolo Compieta
 
 thanks to : Veteran Unix Admins group on Facebook
