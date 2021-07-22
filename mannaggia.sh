@@ -30,7 +30,7 @@ ndsflag=false
 wallflag=false
 shutdown=false
 off=false
-DELSTRING1="</FONT>"
+DELSTRING1=" <FONT SIZE=\"-1\"><b>"
 DELSTRING2="</b>"
 DEFPLAYER="mplayer -cache 1024 -"
 PLAYER="${PLAYER:-$DEFPLAYER}"
