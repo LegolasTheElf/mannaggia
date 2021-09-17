@@ -30,8 +30,7 @@ ndsflag=false
 wallflag=false
 shutdown=false
 off=false
-DELSTRING1="</FONT>"
-DELSTRING2="</b>|<b>"
+DELSTRING="</b>|<b>"
 DEFPLAYER="mplayer -cache 1024 -"
 PLAYER="${PLAYER:-$DEFPLAYER}"
 LC_CTYPE=C
@@ -126,7 +125,7 @@ fi
 while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9| sed '/^.$/d' | $shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$2}' | iconv -f ISO-8859-1)"
+	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9| sed '/^.$/d' | $shufCmd -n1 | awk -F "$DELSTRING" '{print$2}' | iconv -f ISO-8859-1)"
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
