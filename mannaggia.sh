@@ -125,7 +125,7 @@ fi
 while [ "$nds" != 0 ]
 	do
 	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 3-9| sed '/^.$/d' |  grep -vs '</A>' | $shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2" "$3$4}' | iconv -f ISO-8859-1)"
+	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -aI tit|cut -d'>' -f 3-9| sed '/^.$/d' |  grep -vsI '</A>' | $shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2" "$3$4}' | iconv -f ISO-8859-1)"
 
 	if [ "$wallflag" = true ]
 		then
