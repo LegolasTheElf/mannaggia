@@ -1,4 +1,4 @@
-#!/bin/sh
+!/bin/sh
 ############################################################
 # Mannaggiatore automatico per VUA depressi
 # idea originale by Alexiobash dallo script incazzatore.sh
@@ -21,7 +21,9 @@
 # --nds <n> : numero di santi da invocare (di default continua all'infinito)
 # --shutdown : se nds > 0 e si e` root al termine delle invocazioni spegne
 # --off  : se si e` root invoca un solo santo e spegne (equivale a --nds 1 --shutdown)
+# --saintoftheday  :  variante che invoca biastime e improperi verso i santi del giorno
 audioflag=false
+saintofthedayflag=false
 spm=1
 spmflag=false
 nds=-1
@@ -115,6 +117,11 @@ for parm in "$@"
 			then 
 			off=true
 	fi
+	# imposta saintofthedayflag su true per invocare la url apposita che raccoglie il subset di Santi del giorno
+	if [ "$parm" = "--saintoftheday" ]
+		        then
+			saintofthedayflag=true
+	fi
 
 done
 
@@ -125,17 +132,20 @@ if [ $off = true ]
 fi
 while [ "$nds" != 0 ]
 	do
-	# shellcheck disable=SC2019
-	# OLD.MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9|$shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
-	# Le due variabili ausiliarie DELSTRING non dovrebbero essere piu' necessarie in quanto rimpiazzate da string substitution, il valore di campi oggetto del comando cut e' stato portato da 4-9 a 3-9 per includere il titolo dell'eventuale santo/beato
+	# l'if condizionale per il parametro che permette di invocare i santi dalla pagina del giorno o della global
+	if [ "$saintofthedayflag" = true ]
+	then
+		MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(date +%m/%d)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
+	else
 	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
+	fi
 	
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
 		if [ "$pot" = 0 ]
 			then
-			echo "systemd merda, poettering vanaglorioso fonte di danni, ti strafulmini santa cunegonda bipalluta protrettice dei VUA"
+			echo "Systemd merda, Poettering vanaglorioso fonte di danni, ti strafulmini santa Cunegonda Bipalluta protrettice dei VUA"
 			else
 			# attenzione: se non siete root o sudoers dovete togliere dalla riga successiva "sudo" e "-n"
 			echo "$MANNAGGIA" | sudo wall -n
