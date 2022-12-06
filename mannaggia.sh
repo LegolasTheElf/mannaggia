@@ -1,4 +1,4 @@
-!/bin/sh
+!/usr/bin/env bash
 ############################################################
 # Mannaggiatore automatico per VUA depressi
 # idea originale by Alexiobash dallo script incazzatore.sh
