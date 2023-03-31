@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 ############################################################
 # Mannaggiatore automatico per VUA depressi
 # idea originale by Alexiobash dallo script incazzatore.sh
@@ -121,6 +121,7 @@ for parm in "$@"
 	if [ "$parm" = "--saintoftheday" ]
 		        then
 			saintofthedayflag=true
+			nds=1
 	fi
 
 done
