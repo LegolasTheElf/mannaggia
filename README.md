@@ -20,7 +20,8 @@ parametri da command line:
 * --wall : invia l'output a tutte le console : attenzione , se non siete root o sudoers disattivare il flag -n
 * --shutdown : se si e' root spegne il computer dopo aver finito di invocare sant (dipende da --nds)
 * --off : equivalente a --nds 1 --shutdown
-
+* --saintoftheday : NEW FEATURE!!, variante che invoca biastime e improperi verso i santi del giorno
+  
 Rilasciato sotto Licenza GNU-GPL v.3
 
 idea originale by Alexiobash dallo script incazzatore.sh
