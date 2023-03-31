@@ -135,9 +135,9 @@ while [ "$nds" != 0 ]
 	# l'if condizionale per il parametro che permette di invocare i santi dalla pagina del giorno o della global
 	if [ "$saintofthedayflag" = true ]
 	then
-		MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(date +%m/%d)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
+		MANNAGGIA="Mannaggia $(curl -Ls "www.santiebeati.it/$(date +%m/%d)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
 	else
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
+	MANNAGGIA="Mannaggia $(curl -Ls "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 3-9|sed 's/<\/FONT> <FONT SIZE="-1"><b>/ /;s/<\/A>//g;s/<\/b>.*$//g;/^[[:space:]]*$/d'|$shufCmd -n1 |iconv -f ISO-8859-1)"
 	fi
 	
 	if [ "$wallflag" = true ]
