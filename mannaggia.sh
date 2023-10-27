@@ -123,8 +123,8 @@ if [ $off = true ]
 fi
 while [ "$nds" != 0 ]
 	do
-	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "https://www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|awk -F'<FONT SIZE="-2">|</FONT> <FONT SIZE="-1"><b>|</b>' '/<a href="\/dettaglio\/.*<FONT/{print $2,$3}' | iconv -f ISO-8859-1| $shufCmd -n1)"
+	letter=$(awk '{printf("%c", $1)}' <<<$((RANDOM % 26 + 65)))
+	MANNAGGIA="Mannaggia $(curl -s "https://www.santiebeati.it/$letter/" | awk -F'<FONT SIZE="-2">|</FONT> <FONT SIZE="-1"><b>|</b>' '/<a href="\/dettaglio\/.*<FONT/{print $2,$3}' | iconv -f ISO-8859-1| $shufCmd -n1)"
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
