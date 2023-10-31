@@ -30,8 +30,6 @@ ndsflag=false
 wallflag=false
 shutdown=false
 off=false
-DELSTRING1="</FONT>"
-DELSTRING2="</b>"
 DEFPLAYER="mplayer -cache 1024 -"
 PLAYER="${PLAYER:-$DEFPLAYER}"
 LC_CTYPE=C
@@ -125,8 +123,17 @@ if [ $off = true ]
 fi
 while [ "$nds" != 0 ]
 	do
-	# shellcheck disable=SC2019
-	MANNAGGIA="Mannaggia $(curl -s "www.santiebeati.it/$(</dev/urandom tr -dc A-Z|head -c1)/"|grep -a tit|cut -d'>' -f 4-9| sed '/^.$/d' | $shufCmd -n1 |awk -F "$DELSTRING1" '{print$1$2}'|awk -F "$DELSTRING2" '{print$1}' | iconv -f ISO-8859-1)"
+	letter=$(awk '{printf("%c", $1)}' <<<$((RANDOM % 26 + 65)))
+	pages=$(curl -s https://www.santiebeati.it/$letter/ |awk -F'more|\\.html' '/Pagina:/{print $(NF-1);exit}')
+	path=
+
+	# Alcune lettere tipo Q e Z hanno una pagina sola
+	if [ -n "$pages" ]; then
+		page=$((RANDOM % pages + 1))
+		[ $page -ne 1 ] && path=more$page.html
+	fi
+
+	MANNAGGIA="Mannaggia $(curl -s "https://www.santiebeati.it/$letter/$path" | awk -F'<FONT SIZE="-2">|</FONT> <FONT SIZE="-1"><b>|</b>' '/<a href="\/dettaglio\/.*<FONT/{print $2,$3}' | iconv -f ISO-8859-1| $shufCmd -n1)"
 	if [ "$wallflag" = true ]
 		then
 		pot=$(( nds % 50 ))
