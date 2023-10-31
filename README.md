@@ -35,7 +35,7 @@ Collaborators:
 * Davide "kk0nrad" Corrado
 
 patcher e contributors:
-* Marco Placidi
+* Marco Placidi (demon86rm)
 * Maurizio "Tannoiser" Lemmo
 * Matteo Panella
 * Mattia Munari
