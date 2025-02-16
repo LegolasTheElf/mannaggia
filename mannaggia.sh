@@ -31,12 +31,29 @@ wallflag=false
 shutdown=false
 off=false
 DEFPLAYER="mplayer -cache 1024 -"
+DEFPLAYERARGS="-ao alsa -really-quiet -noconsolecontrols"
 PLAYER="${PLAYER:-$DEFPLAYER}"
+PLAYERARGS="${PLAYERARGS:-$DEFPLAYERARGS}"
+SAY_DEFAULT="sayGoogle"
+SAY="${SAY:-$SAY_DEFAULT}"
 LC_CTYPE=C
 
-say() {
+sayGoogle() {
 	local IFS=+
-	mplayer -ao alsa -really-quiet -noconsolecontrols "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=it"
+	${PLAYER} ${PLAYERARGS} "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=it"
+}
+
+sayTtsDemo() {
+    local IFS=+
+    ${PLAYER} ${PLAYERARGS} "https://cache-a.oddcast.com/tts/genC.php?EID=7&LID=7&VID=2&TXT=$*&EXT=mp3&FNAME=&ACC=15679&SceneID=2699582&HTTP_ERR="
+}
+
+sayEspeak() {
+    espeak -vit --stdout "$*" | ${PLAYER} ${PLAYERARGS} -
+}
+
+say() {
+    ${SAY} "$*"
 }
 
 if [ $(uname) = "Darwin" ]
