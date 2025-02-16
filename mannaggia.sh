@@ -31,12 +31,14 @@ wallflag=false
 shutdown=false
 off=false
 DEFPLAYER="mplayer -cache 1024 -"
+DEFPLAYERARGS="-ao alsa -really-quiet -noconsolecontrols"
 PLAYER="${PLAYER:-$DEFPLAYER}"
+PLAYERARGS="${PLAYERARGS:-$DEFPLAYERARGS}"
 LC_CTYPE=C
 
 say() {
 	local IFS=+
-	mplayer -ao alsa -really-quiet -noconsolecontrols "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=it"
+	${PLAYER} ${PLAYERARGS} "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=it"
 }
 
 if [ $(uname) = "Darwin" ]
